@@ -1,6 +1,7 @@
 from tkinter import *
 from subprocess import check_output
 from os import getenv
+import webbrowser as wb
 
 def donothing():
     filewin = Toplevel(root)
@@ -19,6 +20,9 @@ class Class:
 def runCmd(text):
     check_output(text, shell=False)
     root.destroy()
+
+def openPage(url):
+    wb.get('windows-default').open(url)
 
 def buildRoot():
     clearList = root.winfo_children()
@@ -42,9 +46,8 @@ def buildRoot():
     menubar.add_cascade(label="File", menu=filemenu)
 
     helpmenu = Menu(menubar, tearoff=0)
-    helpmenu.add_command(label="Report Bug", command=donothing)
-    helpmenu.add_command(label="Github Repo", command=donothing)
-    helpmenu.add_command(label="About", command=donothing)
+    helpmenu.add_command(label="Report Bug", command=(lambda *args: openPage('https://github.com/bMorgan01/WebinarsPy/issues')))
+    helpmenu.add_command(label="Github Repo", command=(lambda *args: openPage('https://github.com/bMorgan01/WebinarsPy')))
     menubar.add_cascade(label="Help", menu=helpmenu)
 
     root.config(menu=menubar)
@@ -273,6 +276,7 @@ readFile()
 root = Tk()
 root.title("Webinars")
 root.option_add('*Font', '19')
+root.attributes("-toolwindow",1)
 
 buildRoot()
 
